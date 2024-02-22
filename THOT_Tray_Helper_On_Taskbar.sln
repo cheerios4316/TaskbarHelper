@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THOT_Tray_Helper_On_Taskbar", "THOT_Tray_Helper_On_Taskbar\THOT_Tray_Helper_On_Taskbar.csproj", "{4A1BCD86-1D4B-4427-8155-063FE12ACD50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A1BCD86-1D4B-4427-8155-063FE12ACD50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1BCD86-1D4B-4427-8155-063FE12ACD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1BCD86-1D4B-4427-8155-063FE12ACD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1BCD86-1D4B-4427-8155-063FE12ACD50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48657FB8-F621-403C-BEF6-A3754559C257}
+	EndGlobalSection
+EndGlobal

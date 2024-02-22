@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace THOT_Tray_Helper_On_Taskbar
+{
+    internal static class ContextFunctions
+    {
+        const int SPI_SETDESKWALLPAPER = 20;
+        const int SPIF_UPDATEINIFILE = 0x01;
+        const int SPIF_SENDCHANGE = 0x02;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+
+        public static void SetDesktopWallpaper(string path)
+        {
+            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, path, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
+        }
+
+        public static ToolStripMenuItem[] GenerateWallpaperOptionList(string inputPath)
+        {
+            if(!Directory.Exists(inputPath)) return Array.Empty<ToolStripMenuItem>();
+
+            string[] pathList = Directory.GetFiles(inputPath);
+
+            if (pathList.Length == 0) return Array.Empty<ToolStripMenuItem>();
+
+            ToolStripMenuItem[] res = new ToolStripMenuItem[pathList.Length];
+            int k = 0;
+            foreach(string path in pathList)
+            {
+                string[] pathParts = path.Split('\\');
+
+                string fileName = String.Join('.', pathParts.Last().Split('.').SkipLast(1));
+                res[k] = new ToolStripMenuItem(fileName, null, (sender, e) => { SetDesktopWallpaper(path); });
+                k++;
+            }
+
+            return res;
+        }
+
+        public static ToolStripMenuItem[] GenerateQuickFoldersOptionList(string paths)
+        {
+            if(paths.Length == 0) return Array.Empty<ToolStripMenuItem> ();
+
+            string[] pathList = paths.Split(';');
+            List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
+
+            int k = 0;
+            foreach(string path in pathList)
+            {
+                string[] pathParts = path.Split('\\');
+                string folderName = pathParts.Last();
+
+                if(Directory.Exists(path)) res.Add(new ToolStripMenuItem((++k).ToString() + ". " + folderName, null, (sender, e) => { Process.Start("explorer.exe", path); }));
+            }
+
+            return res.ToArray();
+        }
+
+        public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
+        {
+            foreach (var item in list)
+            {
+                target.DropDownItems.Add(item);
+            }
+        }
+    }
+}
