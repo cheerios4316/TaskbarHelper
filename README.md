@@ -1,6 +1,6 @@
 # THOT: Tray Helper On Taskbar
 ## What is it
-It's a helper for windows that lives in your taskbar.
+It's a helper for Windows that lives in your taskbar.
 ## What it does
 For now, it changes wallpaper and has links to folders.
 ## How to use
