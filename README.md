@@ -13,7 +13,10 @@ Config settings work as follows:
 
 Complex (or cumulative) settings use the `+` sign instead of `=`:
 `cumulative+value`
-You can add multiple values to a cumulative settings. Example at the end of file
+You can add multiple values to a cumulative settings (example at the end of README).
+
+The config file can also be accessed and edited through the notepad by right clicking the icon on the taskbar and choosing `Edit config file`.
+After editing the config file, the program must be restarted in order for the modifications to take place.
 
 ### List of available settings
 
