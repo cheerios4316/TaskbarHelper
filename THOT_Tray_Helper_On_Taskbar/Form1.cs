@@ -43,7 +43,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickLaunchList = ContextFunctions.GenerateQuickLaunchOptionList(quickLaunchPathList.Values);
 
-            if (quickLaunchList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickLaunchList, Labels.QUICK_FOLDERS));
+            if (quickLaunchList.Length > 0) AddNewMenuItem(quickLaunchList, Labels.QUICK_LAUNCH);
             #endregion
 
             //Quick folders
@@ -52,7 +52,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Values);
 
-            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickFolderList, Labels.QUICK_FOLDERS));
+            if (quickFolderList.Length > 0) AddNewMenuItem(quickFolderList, Labels.QUICK_FOLDERS);
             #endregion
 
             //Quick Web
@@ -61,7 +61,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickLinkList = ContextFunctions.GenerateQuickLinkOptionList(quickLinkSetting.Values);
 
-            if (quickLinkList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickLinkList, Labels.QUICK_LINK));
+            if (quickLinkList.Length > 0) AddNewMenuItem(quickLinkList, Labels.QUICK_LINK);
             #endregion
 
             //Wallpaper
@@ -69,7 +69,7 @@ namespace THOT_Tray_Helper_On_Taskbar
             Setting wallpaperPath = this.settingsManager.FetchUserSetting(SettingNames.WALLPAPER_PATH_SETTING);
             ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
 
-            if (wallpaperPath.Value != String.Empty && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(wallpaperList, Labels.CHANGE_WALLPAPER));
+            if (wallpaperPath.Value != String.Empty && wallpaperList.Length > 0) AddNewMenuItem(wallpaperList, Labels.CHANGE_WALLPAPER);
             #endregion
 
             //Edit config file
@@ -94,6 +94,11 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
             notifyIcon1.Text = Labels.TASKBAR_ICON_TEXT;
+        }
+
+        private void AddNewMenuItem(ToolStripMenuItem[] list, string label)
+        {
+            contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(list, label));
         }
     }
 }
