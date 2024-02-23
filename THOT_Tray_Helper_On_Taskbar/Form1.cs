@@ -81,7 +81,7 @@ namespace THOT_Tray_Helper_On_Taskbar
             if (config_exists)
             {
                 contextMenuStrip1.Items.Add(new ToolStripSeparator());
-                contextMenuStrip1.Items.Add(Labels.EDIT_CONFIG_TEXT, null, (sender, e) => { Process.Start("notepad.exe", configPath); });
+                contextMenuStrip1.Items.Add(Labels.EDIT_CONFIG_TEXT, null, (sender, e) => { Process.Start(new ProcessStartInfo(configPath) { UseShellExecute = true}); });
             }
 
             #endregion
