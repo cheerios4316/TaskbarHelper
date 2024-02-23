@@ -35,5 +35,6 @@ namespace THOT_Tray_Helper_On_Taskbar
     public static class ProgramData
     {
         public static readonly string[] VALID_QUICKLAUNCH_TYPES = { "exe", "bat" };
+        public static readonly string[] VALID_WALLPAPER_TYPES = { "png", "jpg", "jpeg", "bmp", "dib", "tif", "tiff", "jfif", "jpe", "gif", "heif", "heic", "webp" };
     }
 }

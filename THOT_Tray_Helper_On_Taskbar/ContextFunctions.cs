@@ -39,18 +39,24 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             if (pathList.Length == 0) return Array.Empty<ToolStripMenuItem>();
 
-            ToolStripMenuItem[] res = new ToolStripMenuItem[pathList.Length];
+            List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
             int k = 0;
             foreach(string path in pathList)
             {
                 string[] pathParts = path.Split('\\');
 
                 string fileName = String.Join('.', pathParts.Last().Split('.').SkipLast(1));
-                res[k] = new ToolStripMenuItem(fileName, null, (sender, e) => { SetDesktopWallpaper(path); });
+                string fileType = pathParts.Last().Split('.').Last();
+
+                string[] types = ProgramData.VALID_WALLPAPER_TYPES;
+
+                if (!ProgramData.VALID_WALLPAPER_TYPES.Contains(fileType.ToLower())) continue;
+
+                res.Add(new ToolStripMenuItem(fileName, null, (sender, e) => { SetDesktopWallpaper(path); }));
                 k++;
             }
 
-            return res;
+            return res.ToArray();
         }
 
         public static ToolStripMenuItem[] GenerateQuickFoldersOptionList(string[] paths)
