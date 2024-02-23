@@ -72,17 +72,32 @@ namespace THOT_Tray_Helper_On_Taskbar
             List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
 
             int k = 0;
-            foreach(string path in values)
+            foreach(string value in values)
             {
+                string path = "";
+                string labelText = "";
+                string[] valueParts = value.Split(';');
+
+                if (valueParts.Length == 1) path = value;
+                if (valueParts.Length == 2)
+                {
+                    path = valueParts[1];
+                    labelText = valueParts[0];
+                }
+
                 string[] pathParts = path.Split('\\');
                 string fullFileName = pathParts.Last();
                 string fileName = String.Join('.', fullFileName.Split('.').SkipLast(1));
                 string fileExtension = fullFileName.Split('.').Last();
 
-                if (!File.Exists(path)) continue;
-                if (fileExtension.ToLower() != ".exe") continue;
+                bool ex = File.Exists(path);
 
-                res.Add(new ToolStripMenuItem((++k).ToString() + ". " + fileName, null, (sender, e) => { Process.Start(path); }));
+                if (!File.Exists(path)) continue;
+                if (fileExtension.ToLower() != "exe") continue;
+
+                string displayName = (labelText != String.Empty) ? labelText : fileName;
+
+                res.Add(new ToolStripMenuItem((++k).ToString() + ". " + displayName, null, (sender, e) => { Process.Start(path); }));
             }
 
             return res.ToArray();
@@ -108,6 +123,15 @@ namespace THOT_Tray_Helper_On_Taskbar
         public static ToolStripMenuItem GenerateQuickFoldersItem(ToolStripMenuItem[] list)
         {
             var submenu = new ToolStripMenuItem("Quick Folders");
+
+            ContextFunctions.AddMultipleItems(list, submenu);
+
+            return submenu;
+        }
+
+        public static ToolStripMenuItem GenerateQuickLaunchItem(ToolStripMenuItem[] list)
+        {
+            var submenu = new ToolStripMenuItem("Quick Launch");
 
             ContextFunctions.AddMultipleItems(list, submenu);
 

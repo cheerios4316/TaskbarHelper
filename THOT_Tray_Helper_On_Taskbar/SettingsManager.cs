@@ -6,11 +6,14 @@
 
         private string programDataPath, configFileName;
 
+        private List<string> quickLaunchValues;
+
         public SettingsManager(string programDataPath, string configFileName) 
         {
             this.userSettings = new Dictionary<string, Setting>();
             this.programDataPath = programDataPath;
             this.configFileName = configFileName;
+            this.quickLaunchValues = new List<string>();
         }
 
         public void LoadConfig()
@@ -28,26 +31,34 @@
             foreach (string line in configContent)
             {
                 string result = this.ManageSettingsLine(line, streamWriter);
-                if (result !== String.Empty) this.AddComplexSetting
-                        /**
-                         * todo
-                         * fai funzione addcomplexsetting
-                         * questa funzione deve dividere per + e fare uno switch sul lato sinistro della stringa
-                         * se lato_sx == unacertaopzione allora deve aggiungere a un dato array di stringhe un elemento = lato_dx
-                         * 
-                         * case('una_opzione'):
-                         *     this.una_opzione_values.Add(lato_dx)
-                         *     break;
-                         * case('altra opzione')... etc...
-                         * 
-                         * poi dopo la fine di questo ciclo qui creo un setting per ciascuno di quegli array:
-                         * 
-                         * this.userSettings['una_opzione'] = new Setting('una_opzione', this.una_opzione_values);
-                         * this.userSettings['altra_opzione'] = new Setting('altra_opzione', this.altra_opzione_values);
-                         */
+                if (result != String.Empty) this.AddComplexSetting(result);
             }
 
+            this.userSettings["quick_launch"] = new Setting("quick_launch", this.quickLaunchValues.ToArray());
+
             if (streamWriter != null) streamWriter.Dispose();
+        }
+
+        private void AddComplexSetting(string line)
+        {
+            string[] parts = line.Split('+');
+
+            (string key, string value) = (parts[0], parts[1]);
+
+            switch(key)
+            {
+                case "quick_launch":
+                    if (!this.quickLaunchValues.Contains(value)) this.AddUniqueValue(value, quickLaunchValues);
+                    break;
+            }
+        }
+
+        private void AddUniqueValue(string value, List<string> values)
+        {
+            if (value == String.Empty) return;
+            if (values.Contains(value)) return;
+
+            values.Add(value);
         }
 
         private string ManageSettingsLine(string line, StreamWriter? sw = null)
@@ -71,6 +82,7 @@
             res.Add("wallpaper_path=" + wallpaperPath);
             if (!Directory.Exists(wallpaperPath)) Directory.CreateDirectory(wallpaperPath);
             res.Add("quick_folders=");
+            res.Add("quick_launch+");
 
             return res.ToArray();
         }
