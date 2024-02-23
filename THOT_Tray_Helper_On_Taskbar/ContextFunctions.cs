@@ -52,15 +52,14 @@ namespace THOT_Tray_Helper_On_Taskbar
             return res;
         }
 
-        public static ToolStripMenuItem[] GenerateQuickFoldersOptionList(string paths)
+        public static ToolStripMenuItem[] GenerateQuickFoldersOptionList(string[] paths)
         {
             if(paths.Length == 0) return GenerateEmptyItemList();
 
-            string[] pathList = paths.Split(';');
             List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
 
             int k = 0;
-            foreach(string path in pathList)
+            foreach(string path in paths)
             {
                 string[] pathParts = path.Split('\\');
                 string folderName = pathParts.Last();

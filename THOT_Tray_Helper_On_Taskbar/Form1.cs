@@ -51,9 +51,18 @@ namespace THOT_Tray_Helper_On_Taskbar
             #region QUICK FOLDERS
             Setting quickFolderPathList = this.settingsManager.FetchUserSetting(SettingNames.QUICK_FOLDERS_SETTING);
 
-            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Value);
+            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Values);
 
             if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickFoldersItem(quickFolderList));
+            #endregion
+
+            //Quick Web
+            #region QUICK WEB
+
+            /**
+             * @todo IMPLEMENT QUICK WEB WITH LINKS TO OPEN IN DEFAULT BROWSER
+             */
+
             #endregion
 
             //Wallpaper
