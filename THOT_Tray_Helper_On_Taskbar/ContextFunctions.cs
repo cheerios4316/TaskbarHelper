@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -25,7 +26,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         public static ToolStripMenuItem[] GenerateWallpaperOptionList(string inputPath)
         {
-            if(!Directory.Exists(inputPath)) return Array.Empty<ToolStripMenuItem>();
+            if(!Directory.Exists(inputPath)) return GenerateEmptyItemList();
 
             string[] pathList = Directory.GetFiles(inputPath);
 
@@ -47,7 +48,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         public static ToolStripMenuItem[] GenerateQuickFoldersOptionList(string paths)
         {
-            if(paths.Length == 0) return Array.Empty<ToolStripMenuItem> ();
+            if(paths.Length == 0) return GenerateEmptyItemList();
 
             string[] pathList = paths.Split(';');
             List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
@@ -64,12 +65,58 @@ namespace THOT_Tray_Helper_On_Taskbar
             return res.ToArray();
         }
 
+        internal static ToolStripMenuItem[] GenerateQuickLaunchOptionList(string[] values)
+        {
+            if (values.Length == 0) GenerateEmptyItemList();
+
+            List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
+
+            int k = 0;
+            foreach(string path in values)
+            {
+                string[] pathParts = path.Split('\\');
+                string fullFileName = pathParts.Last();
+                string fileName = String.Join('.', fullFileName.Split('.').SkipLast(1));
+                string fileExtension = fullFileName.Split('.').Last();
+
+                if (!File.Exists(path)) continue;
+                if (fileExtension.ToLower() != ".exe") continue;
+
+                res.Add(new ToolStripMenuItem((++k).ToString() + ". " + fileName, null, (sender, e) => { Process.Start(path); }));
+            }
+
+            return res.ToArray();
+        }
+
         public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
         {
             foreach (var item in list)
             {
                 target.DropDownItems.Add(item);
             }
+        }
+
+        public static ToolStripMenuItem GenerateWallpaperListItem(ToolStripMenuItem[] list)
+        {
+            var submenu = new ToolStripMenuItem("Change Wallpaper");
+
+            ContextFunctions.AddMultipleItems(list, submenu);
+
+            return submenu;
+        }
+
+        public static ToolStripMenuItem GenerateQuickFoldersItem(ToolStripMenuItem[] list)
+        {
+            var submenu = new ToolStripMenuItem("Quick Folders");
+
+            ContextFunctions.AddMultipleItems(list, submenu);
+
+            return submenu;
+        }
+
+        public static ToolStripMenuItem[] GenerateEmptyItemList()
+        {
+            return Array.Empty<ToolStripMenuItem>();
         }
     }
 }

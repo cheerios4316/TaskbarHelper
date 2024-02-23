@@ -7,8 +7,10 @@ namespace THOT_Tray_Helper_On_Taskbar
         private string documentsPath;
         private string programDataPath;
         private const string PROGRAM_FOLDER_NAME = "thot_data";
-        private const string configFileName = "thot_config.ini";
+        private const string CONFIG_FILE_NAME = "thot_config.ini";
         private Dictionary<string, string> userSettings;
+
+        private SettingsManager settingsManager;
 
         public Form1()
         {
@@ -17,15 +19,16 @@ namespace THOT_Tray_Helper_On_Taskbar
             this.documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             this.userSettings = new Dictionary<string, string>();
             this.programDataPath = Path.Combine(this.documentsPath, PROGRAM_FOLDER_NAME);
+            this.settingsManager = new SettingsManager(this.programDataPath, CONFIG_FILE_NAME);
 
-            this.applySettings();
+            this.ApplySettings();
 
-            this.handleConfig();
+            this.settingsManager.LoadConfig();
 
-            this.loadContextMenuOptions();
+            this.LoadContextMenuOptions();
         }
 
-        private void applySettings()
+        private void ApplySettings()
         {
             this.ShowInTaskbar = false;
             this.Opacity = 0; // Makes the form transparent
@@ -35,67 +38,25 @@ namespace THOT_Tray_Helper_On_Taskbar
             Directory.CreateDirectory(this.programDataPath);
         }
 
-        private void handleConfig()
-        {
-            string configPath = Path.Combine(this.programDataPath, configFileName);
-            bool config_exists = File.Exists(configPath);
-            string[] configContent = Array.Empty<string>();
-
-            StreamWriter? streamWriter = null;
-
-            if (!config_exists) streamWriter = File.CreateText(configPath);
-
-            configContent = (streamWriter != null) ? this.CreateDefaultConfigFile() : File.ReadAllLines(configPath);
-
-            foreach(string line in configContent)
-            {
-                this.manageSettingsLine(line, streamWriter);
-            }
-
-            if (streamWriter != null) streamWriter.Dispose();
-        }
-
-        private void manageSettingsLine(string line, StreamWriter? sw = null)
-        {
-            if(sw != null) sw.WriteLine(line); 
-
-            string[] parts = line.Split('=');
-            if (parts.Length == 2) this.userSettings[parts[0]] = parts[1];
-        }
-
-        private string[] CreateDefaultConfigFile()
-        {
-            List<string> res = new List<string>();
-
-            string wallpaperPath = Path.Combine(this.programDataPath, "wallpapers");
-
-            res.Add("wallpaper_path=" + wallpaperPath);
-            if (!Directory.Exists(wallpaperPath)) Directory.CreateDirectory(wallpaperPath);
-            res.Add("quick_folders=");
-
-            return res.ToArray();
-        }
-
-        private string FetchUserSetting(string setting)
-        {
-            this.userSettings.TryGetValue(setting, out string? result);
-
-            return result ?? "";
-        }
-
-        private void loadContextMenuOptions()
+        private void LoadContextMenuOptions()
         {
             //Wallpaper
-            string wallpaperPath = FetchUserSetting("wallpaper_path");
-            ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath);
+            Setting wallpaperPath = this.settingsManager.FetchUserSetting("wallpaper_path");
+            ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
 
-            if(wallpaperPath != "" && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(this.GenerateWallpaperListItem(wallpaperList));
+            if(wallpaperPath.Value != "" && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateWallpaperListItem(wallpaperList));
 
             //Quick folders
-            string quickFolderPathList = FetchUserSetting("quick_folders");
-            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList);
+            Setting quickFolderPathList = this.settingsManager.FetchUserSetting("quick_folders");
+            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Value);
 
-            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(this.GenerateQuickFoldersItem(quickFolderList));
+            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickFoldersItem(quickFolderList));
+
+            //Quick launch
+            Setting quickLaunchPathList = this.settingsManager.FetchUserSetting("quick_launch");
+            ToolStripMenuItem[] quickLaunchList = ContextFunctions.GenerateQuickLaunchOptionList(quickLaunchPathList.Values);
+
+            if (quickLaunchList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickLaunchItem(quickLaunchList));
 
             //Exit
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
@@ -103,24 +64,6 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
             notifyIcon1.Text = "Tray Helper On Taskbar";
-        }
-
-        private ToolStripMenuItem GenerateWallpaperListItem(ToolStripMenuItem[] list)
-        {
-            var submenu = new ToolStripMenuItem("Change Wallpaper");
-
-            ContextFunctions.AddMultipleItems(list, submenu);
-
-            return submenu;
-        }
-
-        private ToolStripMenuItem GenerateQuickFoldersItem(ToolStripMenuItem[] list)
-        {
-            var submenu = new ToolStripMenuItem("Quick Folders");
-
-            ContextFunctions.AddMultipleItems(list, submenu);
-
-            return submenu;
         }
     }
 }
