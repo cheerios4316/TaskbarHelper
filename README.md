@@ -1,8 +1,10 @@
 # THOT: Tray Helper On Taskbar
 ## What is it
 It's a helper for Windows that lives in your taskbar.
+
 ## What it does
-For now, it changes wallpaper and has links to folders.
+It allows you to change your wallpaper on the fly and fire up your favorite programs and folders at a moment's notice.
+
 ## How to use
 Launch the program, then close it.
 In your Documents folder, find `thot_data` folder. Within that, there is a `thot_config.ini` file.
