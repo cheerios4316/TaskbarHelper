@@ -16,6 +16,8 @@
             this.quickLaunchValues = new List<string>();
         }
 
+        #region CONFIG LOADER
+
         public void LoadConfig()
         {
             string configPath = Path.Combine(this.programDataPath, configFileName);
@@ -39,28 +41,6 @@
             if (streamWriter != null) streamWriter.Dispose();
         }
 
-        private void AddComplexSetting(string line)
-        {
-            string[] parts = line.Split('+');
-
-            (string key, string value) = (parts[0], parts[1]);
-
-            switch(key)
-            {
-                case "quick_launch":
-                    if (!this.quickLaunchValues.Contains(value)) this.AddUniqueValue(value, quickLaunchValues);
-                    break;
-            }
-        }
-
-        private void AddUniqueValue(string value, List<string> values)
-        {
-            if (value == String.Empty) return;
-            if (values.Contains(value)) return;
-
-            values.Add(value);
-        }
-
         private string ManageSettingsLine(string line, StreamWriter? sw = null)
         {
             if (sw != null) sw.WriteLine(line);
@@ -72,6 +52,22 @@
 
             return String.Empty;
         }
+
+        private void AddComplexSetting(string line)
+        {
+            string[] parts = line.Split('+');
+
+            (string key, string value) = (parts[0], parts[1]);
+
+            switch (key)
+            {
+                case "quick_launch":
+                    if (!this.quickLaunchValues.Contains(value)) this.AddUniqueValue(value, quickLaunchValues);
+                    break;
+            }
+        }
+
+        #endregion
 
         private string[] CreateDefaultConfigFile()
         {
@@ -92,6 +88,14 @@
             this.userSettings.TryGetValue(setting, out Setting? result);
 
             return result ?? new Setting(setting, "");
+        }
+
+        private void AddUniqueValue(string value, List<string> values)
+        {
+            if (value == String.Empty) return;
+            if (values.Contains(value)) return;
+
+            values.Add(value);
         }
     }
 }

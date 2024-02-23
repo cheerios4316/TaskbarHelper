@@ -12,6 +12,8 @@ namespace THOT_Tray_Helper_On_Taskbar
 {
     internal static class ContextFunctions
     {
+        #region WALLPAPER CHANGER
+
         const int SPI_SETDESKWALLPAPER = 20;
         const int SPIF_UPDATEINIFILE = 0x01;
         const int SPIF_SENDCHANGE = 0x02;
@@ -19,10 +21,14 @@ namespace THOT_Tray_Helper_On_Taskbar
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
 
-        public static void SetDesktopWallpaper(string path)
+        private static void SetDesktopWallpaper(string path)
         {
             SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, path, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
         }
+
+        #endregion
+
+        #region OPTION LIST GENERATORS
 
         public static ToolStripMenuItem[] GenerateWallpaperOptionList(string inputPath)
         {
@@ -103,13 +109,14 @@ namespace THOT_Tray_Helper_On_Taskbar
             return res.ToArray();
         }
 
-        public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
+        public static ToolStripMenuItem[] GenerateEmptyItemList()
         {
-            foreach (var item in list)
-            {
-                target.DropDownItems.Add(item);
-            }
+            return Array.Empty<ToolStripMenuItem>();
         }
+
+        #endregion
+
+        #region MAIN MENU ITEM GENERATORS
 
         public static ToolStripMenuItem GenerateWallpaperListItem(ToolStripMenuItem[] list)
         {
@@ -138,9 +145,14 @@ namespace THOT_Tray_Helper_On_Taskbar
             return submenu;
         }
 
-        public static ToolStripMenuItem[] GenerateEmptyItemList()
+        #endregion
+
+        public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
         {
-            return Array.Empty<ToolStripMenuItem>();
+            foreach (var item in list)
+            {
+                target.DropDownItems.Add(item);
+            }
         }
     }
 }

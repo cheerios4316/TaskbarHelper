@@ -40,27 +40,35 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         private void LoadContextMenuOptions()
         {
-            //Wallpaper
-            Setting wallpaperPath = this.settingsManager.FetchUserSetting("wallpaper_path");
-            ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
-
-            if(wallpaperPath.Value != "" && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateWallpaperListItem(wallpaperList));
-
-            //Quick folders
-            Setting quickFolderPathList = this.settingsManager.FetchUserSetting("quick_folders");
-            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Value);
-
-            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickFoldersItem(quickFolderList));
-
             //Quick launch
+            #region QUICK LAUNCH
             Setting quickLaunchPathList = this.settingsManager.FetchUserSetting("quick_launch");
             ToolStripMenuItem[] quickLaunchList = ContextFunctions.GenerateQuickLaunchOptionList(quickLaunchPathList.Values);
 
             if (quickLaunchList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickLaunchItem(quickLaunchList));
+            #endregion
+
+            //Quick folders
+            #region QUICK FOLDERS
+            Setting quickFolderPathList = this.settingsManager.FetchUserSetting("quick_folders");
+            ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Value);
+
+            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickFoldersItem(quickFolderList));
+            #endregion
+
+            //Wallpaper
+            #region WALLPAPER
+            Setting wallpaperPath = this.settingsManager.FetchUserSetting("wallpaper_path");
+            ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
+
+            if (wallpaperPath.Value != "" && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateWallpaperListItem(wallpaperList));
+            #endregion
 
             //Exit
+            #region EXIT
             contextMenuStrip1.Items.Add(new ToolStripSeparator());
             contextMenuStrip1.Items.Add("Exit", null, (sender, e) => { Application.Exit(); });
+            #endregion
 
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
             notifyIcon1.Text = "Tray Helper On Taskbar";

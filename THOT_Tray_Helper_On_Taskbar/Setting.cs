@@ -11,6 +11,7 @@ namespace THOT_Tray_Helper_On_Taskbar
         private string key, value;
         private string[] values;
 
+        #region CONSTRUCTORS
         public Setting(string key, string value)
         {
             this.key = key;
@@ -24,6 +25,9 @@ namespace THOT_Tray_Helper_On_Taskbar
             this.values = values;
             this.value = String.Empty;
         }
+        #endregion
+
+        #region GETTERS SETTERS
 
         public string Key
         {
@@ -41,5 +45,6 @@ namespace THOT_Tray_Helper_On_Taskbar
             get { return this.values; }
             set { this.values = value; }
         }
+        #endregion
     }
 }
