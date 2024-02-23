@@ -93,8 +93,10 @@
 
             res.Add(String.Concat(SettingNames.WALLPAPER_PATH_SETTING, "=", wallpaperPath));
             if (!Directory.Exists(wallpaperPath)) Directory.CreateDirectory(wallpaperPath);
-            res.Add(String.Concat(SettingNames.QUICK_FOLDERS_SETTING, "="));
+
+            res.Add(String.Concat(SettingNames.QUICK_FOLDERS_SETTING, "+"));
             res.Add(String.Concat(SettingNames.QUICK_LAUNCH_SETTING, "+"));
+            res.Add(String.Concat(SettingNames.QUICK_LINK_SETTING, "+"));
 
             return res.ToArray();
         }
