@@ -20,6 +20,7 @@ namespace THOT_Tray_Helper_On_Taskbar
         public const string CHANGE_WALLPAPER = "Change Wallpaper";
         public const string QUICK_FOLDERS = "Quick Folders";
         public const string QUICK_LAUNCH = "Quick Launch";
+        public const string EDIT_CONFIG_TEXT = "Edit config file";
     }
 
     public static class ConfigStrings

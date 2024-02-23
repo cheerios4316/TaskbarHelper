@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace THOT_Tray_Helper_On_Taskbar
@@ -6,8 +7,6 @@ namespace THOT_Tray_Helper_On_Taskbar
     {
         private string documentsPath;
         private string programDataPath;
-        private const string PROGRAM_FOLDER_NAME = ConfigStrings.PROGRAM_FOLDER;
-        private const string CONFIG_FILE_NAME = ConfigStrings.CONFIG_FILE_NAME;
 
         private SettingsManager settingsManager;
 
@@ -16,8 +15,8 @@ namespace THOT_Tray_Helper_On_Taskbar
             InitializeComponent();
 
             this.documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            this.programDataPath = Path.Combine(this.documentsPath, PROGRAM_FOLDER_NAME);
-            this.settingsManager = new SettingsManager(this.programDataPath, CONFIG_FILE_NAME);
+            this.programDataPath = Path.Combine(this.documentsPath, ConfigStrings.PROGRAM_FOLDER);
+            this.settingsManager = new SettingsManager(this.programDataPath, ConfigStrings.CONFIG_FILE_NAME);
 
             this.ApplySettings();
 
@@ -71,6 +70,20 @@ namespace THOT_Tray_Helper_On_Taskbar
             ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
 
             if (wallpaperPath.Value != String.Empty && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateWallpaperListItem(wallpaperList));
+            #endregion
+
+            //Edit config file
+            #region EDIT CONFIG FILE
+
+            string configPath = Path.Combine(this.programDataPath, ConfigStrings.CONFIG_FILE_NAME);
+            bool config_exists = File.Exists(configPath);
+
+            if (config_exists)
+            {
+                contextMenuStrip1.Items.Add(new ToolStripSeparator());
+                contextMenuStrip1.Items.Add(Labels.EDIT_CONFIG_TEXT, null, (sender, e) => { Process.Start("notepad.exe", configPath); });
+            }
+
             #endregion
 
             //Exit
