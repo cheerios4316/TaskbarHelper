@@ -15,7 +15,7 @@ Complex (or cumulative) settings use the `+` sign instead of `=`:
 `cumulative+value`
 You can add multiple values to a cumulative settings (example at the end of README).
 
-The config file can also be accessed and edited through the notepad by right clicking the icon on the taskbar and choosing `Edit config file`.
+The config file can also be accessed and edited through your default text editor by right clicking the icon on the taskbar and choosing `Edit config file`.
 After editing the config file, the program must be restarted in order for the modifications to take place.
 
 ### List of available settings
@@ -24,7 +24,8 @@ After editing the config file, the program must be restarted in order for the mo
 |------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|------------|
 | `wallpaper_path` | One path to a folder                                                                                   | Lets you switch wallpapers with the image files in the folder. | Normal     |
 | `quick_folders`  | A path to a folder                                                                                     | Lets you open the chosen folders in explorer.                  | Cumulative |
-| `quick_launch`   | Either a path to a valid file (or a name, followed by a semicolon, followed by a path to a valid file) | Launches the chosen file                                       | Cumulative |
+| `quick_launch`   | Either a path to a valid file (or a name, followed by a semicolon, followed by a path to a valid file) | Launches the chosen file.                                      | Cumulative |
+| `quick_link`     | Same thing as `quick_launch`, but with an URL instead of a path to a file                              | Opens the chosen URL in the default web browser.               |            |
 
 File types valid for `quick_launch`: `.bat`, `.exe`
 
