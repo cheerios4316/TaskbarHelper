@@ -1,5 +1,5 @@
 # THOT: Tray Helper On Taskbar
-## What is it
+## What it is
 It's a helper for Windows that lives in your taskbar.
 
 ## What it does
