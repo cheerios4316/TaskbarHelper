@@ -43,7 +43,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickLaunchList = ContextFunctions.GenerateQuickLaunchOptionList(quickLaunchPathList.Values);
 
-            if (quickLaunchList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickLaunchItem(quickLaunchList));
+            if (quickLaunchList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickLaunchList, Labels.QUICK_FOLDERS));
             #endregion
 
             //Quick folders
@@ -52,7 +52,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickFolderList = ContextFunctions.GenerateQuickFoldersOptionList(quickFolderPathList.Values);
 
-            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickFoldersItem(quickFolderList));
+            if (quickFolderList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickFolderList, Labels.QUICK_FOLDERS));
             #endregion
 
             //Quick Web
@@ -61,7 +61,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             ToolStripMenuItem[] quickLinkList = ContextFunctions.GenerateQuickLinkOptionList(quickLinkSetting.Values);
 
-            if (quickLinkList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickLinkItem(quickLinkList));
+            if (quickLinkList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(quickLinkList, Labels.QUICK_LINK));
             #endregion
 
             //Wallpaper
@@ -69,7 +69,7 @@ namespace THOT_Tray_Helper_On_Taskbar
             Setting wallpaperPath = this.settingsManager.FetchUserSetting(SettingNames.WALLPAPER_PATH_SETTING);
             ToolStripMenuItem[] wallpaperList = ContextFunctions.GenerateWallpaperOptionList(wallpaperPath.Value);
 
-            if (wallpaperPath.Value != String.Empty && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateWallpaperListItem(wallpaperList));
+            if (wallpaperPath.Value != String.Empty && wallpaperList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateMainItem(wallpaperList, Labels.CHANGE_WALLPAPER));
             #endregion
 
             //Edit config file

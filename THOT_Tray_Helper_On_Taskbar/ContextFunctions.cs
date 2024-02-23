@@ -153,45 +153,14 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         #endregion
 
-        #region MAIN MENU ITEM GENERATORS
-
-        public static ToolStripMenuItem GenerateWallpaperListItem(ToolStripMenuItem[] list)
+        public static ToolStripMenuItem GenerateMainItem(ToolStripMenuItem[] list, string label)
         {
-            var submenu = new ToolStripMenuItem(Labels.CHANGE_WALLPAPER);
+            var submenu = new ToolStripMenuItem(label);
 
             ContextFunctions.AddMultipleItems(list, submenu);
 
             return submenu;
         }
-
-        public static ToolStripMenuItem GenerateQuickFoldersItem(ToolStripMenuItem[] list)
-        {
-            var submenu = new ToolStripMenuItem(Labels.QUICK_FOLDERS);
-
-            ContextFunctions.AddMultipleItems(list, submenu);
-
-            return submenu;
-        }
-
-        public static ToolStripMenuItem GenerateQuickLaunchItem(ToolStripMenuItem[] list)
-        {
-            var submenu = new ToolStripMenuItem(Labels.QUICK_LAUNCH);
-
-            ContextFunctions.AddMultipleItems(list, submenu);
-
-            return submenu;
-        }
-
-        public static ToolStripMenuItem GenerateQuickLinkItem(ToolStripMenuItem[] list)
-        {
-            var submenu = new ToolStripMenuItem(Labels.QUICK_LINK);
-
-            ContextFunctions.AddMultipleItems(list, submenu);
-
-            return submenu;
-        }
-
-        #endregion
 
         public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
         {
