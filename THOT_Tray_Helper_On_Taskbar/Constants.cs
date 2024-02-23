@@ -28,4 +28,9 @@ namespace THOT_Tray_Helper_On_Taskbar
         public const string CONFIG_FILE_NAME = "thot_config.ini";
         public const string DEFAULT_WALLPAPER_FOLDER = "wallpapers";
     }
+
+    public static class ProgramData
+    {
+        public static readonly string[] VALID_QUICKLAUNCH_TYPES = { "exe", "bat" };
+    }
 }

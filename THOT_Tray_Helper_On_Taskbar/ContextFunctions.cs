@@ -98,7 +98,7 @@ namespace THOT_Tray_Helper_On_Taskbar
                 bool ex = File.Exists(path);
 
                 if (!File.Exists(path)) continue;
-                if (fileExtension.ToLower() != "exe") continue;
+                if (!ProgramData.VALID_QUICKLAUNCH_TYPES.Contains(fileExtension.ToLower())) continue;
 
                 string displayName = (labelText != String.Empty) ? labelText : fileName;
 
