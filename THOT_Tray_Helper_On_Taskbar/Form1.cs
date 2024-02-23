@@ -57,11 +57,11 @@ namespace THOT_Tray_Helper_On_Taskbar
 
             //Quick Web
             #region QUICK WEB
+            Setting quickLinkSetting = this.settingsManager.FetchUserSetting(SettingNames.QUICK_LINK_SETTING);
 
-            /**
-             * @todo IMPLEMENT QUICK WEB WITH LINKS TO OPEN IN DEFAULT BROWSER
-             */
+            ToolStripMenuItem[] quickLinkList = ContextFunctions.GenerateQuickLinkOptionList(quickLinkSetting.Values);
 
+            if (quickLinkList.Length > 0) contextMenuStrip1.Items.Add(ContextFunctions.GenerateQuickLinkItem(quickLinkList));
             #endregion
 
             //Wallpaper

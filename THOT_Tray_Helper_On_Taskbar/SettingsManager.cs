@@ -8,14 +8,17 @@
 
         private List<string> quickLaunchValues;
         private List<string> quickFolderValues;
+        private List<string> quickLinkValues;
 
         public SettingsManager(string programDataPath, string configFileName) 
         {
             this.userSettings = new Dictionary<string, Setting>();
             this.programDataPath = programDataPath;
             this.configFileName = configFileName;
+
             this.quickLaunchValues = new List<string>();
             this.quickFolderValues = new List<string>();
+            this.quickLinkValues = new List<string>();
         }
 
         #region CONFIG LOADER
@@ -43,6 +46,7 @@
              */
             this.userSettings[SettingNames.QUICK_LAUNCH_SETTING] = new Setting(SettingNames.QUICK_LAUNCH_SETTING, this.quickLaunchValues.ToArray());
             this.userSettings[SettingNames.QUICK_FOLDERS_SETTING] = new Setting(SettingNames.QUICK_FOLDERS_SETTING, this.quickFolderValues.ToArray());
+            this.userSettings[SettingNames.QUICK_LINK_SETTING] = new Setting(SettingNames.QUICK_LINK_SETTING, this.quickLinkValues.ToArray());
 
             if (streamWriter != null) streamWriter.Dispose();
         }
@@ -72,6 +76,9 @@
                     break;
                 case SettingNames.QUICK_FOLDERS_SETTING:
                     this.AddUniqueValue(value, quickFolderValues);
+                    break;
+                case SettingNames.QUICK_LINK_SETTING:
+                    this.AddUniqueValue(value, quickLinkValues);
                     break;
             }
         }

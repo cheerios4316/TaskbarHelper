@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace THOT_Tray_Helper_On_Taskbar
@@ -70,9 +71,9 @@ namespace THOT_Tray_Helper_On_Taskbar
             return res.ToArray();
         }
 
-        internal static ToolStripMenuItem[] GenerateQuickLaunchOptionList(string[] values)
+        public static ToolStripMenuItem[] GenerateQuickLaunchOptionList(string[] values)
         {
-            if (values.Length == 0) GenerateEmptyItemList();
+            if (values.Length == 0) return GenerateEmptyItemList();
 
             List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
 
@@ -103,6 +104,37 @@ namespace THOT_Tray_Helper_On_Taskbar
                 string displayName = (labelText != String.Empty) ? labelText : fileName;
 
                 res.Add(new ToolStripMenuItem((++k).ToString() + ". " + displayName, null, (sender, e) => { Process.Start(path); }));
+            }
+
+            return res.ToArray();
+        }
+
+        public static ToolStripMenuItem[] GenerateQuickLinkOptionList(string[] values)
+        {
+            if (values.Length == 0) return GenerateEmptyItemList();
+
+            List<ToolStripMenuItem> res = new List<ToolStripMenuItem>();
+
+            int k = 0;
+            foreach(string value in values)
+            {
+                string link = String.Empty;
+                string labelText = String.Empty;
+
+                string[] valueParts = value.Split(';');
+
+                if (valueParts.Length == 1) link = SanitizeUrl(value);
+                if (valueParts.Length == 2)
+                {
+                    link = SanitizeUrl(valueParts[1]);
+                    labelText = valueParts[0];
+                }
+
+                if (link == String.Empty) continue;
+
+                string displayName = (labelText != String.Empty) ? labelText : ExtractDomain(link);
+
+                res.Add(new ToolStripMenuItem((++k).ToString() + ". " + displayName, null, (sender, e) => { Process.Start(new ProcessStartInfo(link) { UseShellExecute = true }); }));
             }
 
             return res.ToArray();
@@ -144,6 +176,15 @@ namespace THOT_Tray_Helper_On_Taskbar
             return submenu;
         }
 
+        public static ToolStripMenuItem GenerateQuickLinkItem(ToolStripMenuItem[] list)
+        {
+            var submenu = new ToolStripMenuItem(Labels.QUICK_LINK);
+
+            ContextFunctions.AddMultipleItems(list, submenu);
+
+            return submenu;
+        }
+
         #endregion
 
         public static void AddMultipleItems(ToolStripMenuItem[] list, ToolStripMenuItem target)
@@ -152,6 +193,27 @@ namespace THOT_Tray_Helper_On_Taskbar
             {
                 target.DropDownItems.Add(item);
             }
+        }
+
+        private static string SanitizeUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return string.Empty;
+
+            if (Regex.IsMatch(url, @"^https?:\/\/", RegexOptions.IgnoreCase)) return url.EndsWith("/") ? url : $"{url}/";
+
+            return "https://" + url + "/";
+        }
+
+        public static string ExtractDomain(string url)
+        {
+            Regex regex = new Regex(@"https?:\/\/(.*?)(\/|$)");
+            Match match = regex.Match(url);
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
+            return string.Empty;
         }
     }
 }

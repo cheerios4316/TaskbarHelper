@@ -11,6 +11,7 @@ namespace THOT_Tray_Helper_On_Taskbar
         public const string QUICK_LAUNCH_SETTING = "quick_launch";
         public const string QUICK_FOLDERS_SETTING = "quick_folders";
         public const string WALLPAPER_PATH_SETTING = "wallpaper_path";
+        public const string QUICK_LINK_SETTING = "quick_link";
     }
 
     public static class Labels
@@ -20,6 +21,7 @@ namespace THOT_Tray_Helper_On_Taskbar
         public const string CHANGE_WALLPAPER = "Change Wallpaper";
         public const string QUICK_FOLDERS = "Quick Folders";
         public const string QUICK_LAUNCH = "Quick Launch";
+        public const string QUICK_LINK = "Quick Links";
         public const string EDIT_CONFIG_TEXT = "Edit config file";
     }
 
