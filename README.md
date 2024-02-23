@@ -17,11 +17,13 @@ You can add multiple values to a cumulative settings. Example at the end of file
 
 ### List of available settings
 
-| **Command**      | **Value**                                                                                 | **Description**                                                | **Type**   |
-|------------------|-------------------------------------------------------------------------------------------|----------------------------------------------------------------|------------|
-| `wallpaper_path` | One path to a folder                                                                      | Lets you switch wallpapers with the image files in the folder. | Normal     |
-| `quick_folders`  | A path to a folder                                                                        | Lets you open the chosen folders in explorer.                  | Cumulative |
-| `quick_launch`   | Either a path to a .exe, or a name, followed by a semicolon, followed by a path to a .exe | Launches the chosen .exe file                                  | Cumulative |
+| **Command**      | **Value**                                                                                              | **Description**                                                | **Type**   |
+|------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|------------|
+| `wallpaper_path` | One path to a folder                                                                                   | Lets you switch wallpapers with the image files in the folder. | Normal     |
+| `quick_folders`  | A path to a folder                                                                                     | Lets you open the chosen folders in explorer.                  | Cumulative |
+| `quick_launch`   | Either a path to a valid file (or a name, followed by a semicolon, followed by a path to a valid file) | Launches the chosen file                                       | Cumulative |
+
+File types valid for `quick_launch`: `.bat`, `.exe`
 
 
 ### Example config file
