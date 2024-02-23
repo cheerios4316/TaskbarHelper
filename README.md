@@ -28,6 +28,7 @@ After editing the config file, the program must be restarted in order for the mo
 | `quick_link`     | Same thing as `quick_launch`, but with an URL instead of a path to a file                              | Opens the chosen URL in the default web browser.               |            |
 
 File types valid for `quick_launch`: `.bat`, `.exe`
+File types valid for `quick_link`: `png`, `jpg`, `jpeg`, `bmp`, `dib`, `tif`, `tiff`, `jfif`, `jpe`, `gif`, `heif`, `heic`, `webp`
 
 
 ### Example config file
