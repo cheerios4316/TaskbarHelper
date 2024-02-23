@@ -36,7 +36,7 @@
                 if (result != String.Empty) this.AddComplexSetting(result);
             }
 
-            this.userSettings["quick_launch"] = new Setting("quick_launch", this.quickLaunchValues.ToArray());
+            this.userSettings[SettingNames.QUICK_LAUNCH_SETTING] = new Setting(SettingNames.QUICK_LAUNCH_SETTING, this.quickLaunchValues.ToArray());
 
             if (streamWriter != null) streamWriter.Dispose();
         }
@@ -61,7 +61,7 @@
 
             switch (key)
             {
-                case "quick_launch":
+                case SettingNames.QUICK_LAUNCH_SETTING:
                     if (!this.quickLaunchValues.Contains(value)) this.AddUniqueValue(value, quickLaunchValues);
                     break;
             }
@@ -73,12 +73,12 @@
         {
             List<string> res = new List<string>();
 
-            string wallpaperPath = Path.Combine(this.programDataPath, "wallpapers");
+            string wallpaperPath = Path.Combine(this.programDataPath, ConfigStrings.DEFAULT_WALLPAPER_FOLDER);
 
-            res.Add("wallpaper_path=" + wallpaperPath);
+            res.Add(String.Concat(SettingNames.WALLPAPER_PATH_SETTING, "=", wallpaperPath));
             if (!Directory.Exists(wallpaperPath)) Directory.CreateDirectory(wallpaperPath);
-            res.Add("quick_folders=");
-            res.Add("quick_launch+");
+            res.Add(String.Concat(SettingNames.QUICK_FOLDERS_SETTING, "="));
+            res.Add(String.Concat(SettingNames.QUICK_LAUNCH_SETTING, "+"));
 
             return res.ToArray();
         }
@@ -87,7 +87,7 @@
         {
             this.userSettings.TryGetValue(setting, out Setting? result);
 
-            return result ?? new Setting(setting, "");
+            return result ?? new Setting(setting, String.Empty);
         }
 
         private void AddUniqueValue(string value, List<string> values)

@@ -120,7 +120,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         public static ToolStripMenuItem GenerateWallpaperListItem(ToolStripMenuItem[] list)
         {
-            var submenu = new ToolStripMenuItem("Change Wallpaper");
+            var submenu = new ToolStripMenuItem(Labels.CHANGE_WALLPAPER);
 
             ContextFunctions.AddMultipleItems(list, submenu);
 
@@ -129,7 +129,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         public static ToolStripMenuItem GenerateQuickFoldersItem(ToolStripMenuItem[] list)
         {
-            var submenu = new ToolStripMenuItem("Quick Folders");
+            var submenu = new ToolStripMenuItem(Labels.QUICK_FOLDERS);
 
             ContextFunctions.AddMultipleItems(list, submenu);
 
@@ -138,7 +138,7 @@ namespace THOT_Tray_Helper_On_Taskbar
 
         public static ToolStripMenuItem GenerateQuickLaunchItem(ToolStripMenuItem[] list)
         {
-            var submenu = new ToolStripMenuItem("Quick Launch");
+            var submenu = new ToolStripMenuItem(Labels.QUICK_LAUNCH);
 
             ContextFunctions.AddMultipleItems(list, submenu);
 
