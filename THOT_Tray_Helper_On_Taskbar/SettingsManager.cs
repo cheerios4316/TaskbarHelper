@@ -65,6 +65,8 @@
 
         private void AddComplexSetting(string line)
         {
+            if (line[0] == '#') return;
+
             string[] parts = line.Split('+');
 
             (string key, string value) = (parts[0], parts[1]);
@@ -91,12 +93,11 @@
 
             string wallpaperPath = Path.Combine(this.programDataPath, ConfigStrings.DEFAULT_WALLPAPER_FOLDER);
 
-            res.Add(String.Concat(SettingNames.WALLPAPER_PATH_SETTING, "=", wallpaperPath));
-            if (!Directory.Exists(wallpaperPath)) Directory.CreateDirectory(wallpaperPath);
-
-            res.Add(String.Concat(SettingNames.QUICK_FOLDERS_SETTING, "+"));
-            res.Add(String.Concat(SettingNames.QUICK_LAUNCH_SETTING, "+"));
-            res.Add(String.Concat(SettingNames.QUICK_LINK_SETTING, "+"));
+            foreach(string line in ProgramData.DEFAULT_CONFIG_CONTENT)
+            {
+                string parsed = line.Replace(Placeholders.WALLPAPER_PATH, wallpaperPath);
+                res.Add(parsed);
+            }
 
             return res.ToArray();
         }

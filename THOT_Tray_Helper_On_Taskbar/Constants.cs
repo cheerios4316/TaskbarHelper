@@ -32,9 +32,48 @@ namespace THOT_Tray_Helper_On_Taskbar
         public const string DEFAULT_WALLPAPER_FOLDER = "wallpapers";
     }
 
+    public static class Placeholders
+    {
+        public const string WALLPAPER_PATH = "{WallpaperPathPlaceholder}";
+    }
+
     public static class ProgramData
     {
         public static readonly string[] VALID_QUICKLAUNCH_TYPES = { "exe", "bat" };
         public static readonly string[] VALID_WALLPAPER_TYPES = { "png", "jpg", "jpeg", "bmp", "dib", "tif", "tiff", "jfif", "jpe", "gif", "heif", "heic", "webp" };
+
+        public static readonly string[] DEFAULT_CONFIG_CONTENT =
+        {
+            "# Tray Helper On Taskbar",
+            "# Made by E. Cheerios",
+            "# https://github.com/cheerios4316/TaskbarHelper/",
+            "",
+            "# Read README.md on GitHub for more detailed instructions.",
+            "",
+            "# Quick Launch Settings (takes .bat, .exe)",
+            "# Add Quick Launch programs in two possible ways:",
+            "#\t\tquick_launch+program_name;path\\to\\program}",
+            "#\t\tquick_launch+path\\to\\program",
+            "",
+            "quick_launch+",
+            "",
+            "# Quick Link Settings",
+            "# Add Quick Links like Quick Launch but using web URLs",
+            "# instead of Explorer paths.",
+            "",
+            "quick_link+",
+            "",
+            "# Quick Folder Settings",
+            "# Add Quick Folders like this:",
+            "#\t\tquick_folders+path\\to\\folder",
+            "",
+            "quick_folders+",
+            "",
+            "# Wallpaper Path",
+            "# Set a Wallpaper folder path like this:",
+            "#\t\twallpaper_path=path\\to\\folder",
+            "",
+            "wallpaper_path=" + Placeholders.WALLPAPER_PATH
+        };
     }
 }
