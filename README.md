@@ -30,7 +30,7 @@ After editing the config file, the program must be restarted in order for the mo
 
 File types valid for `quick_launch`: `.bat`, `.exe`
 
-File types valid for `quick_link`: `png`, `jpg`, `jpeg`, `bmp`, `dib`, `tif`, `tiff`, `jfif`, `jpe`, `gif`, `heif`, `heic`, `webp`
+File types valid for wallpaper files: `png`, `jpg`, `jpeg`, `bmp`, `dib`, `tif`, `tiff`, `jfif`, `jpe`, `gif`, `heif`, `heic`, `webp`
 
 
 ### Example config file
